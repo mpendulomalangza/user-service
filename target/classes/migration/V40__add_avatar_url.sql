@@ -1,0 +1,1 @@
+alter table user_avatar add file_key varchar(100) null;

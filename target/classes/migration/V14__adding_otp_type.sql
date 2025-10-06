@@ -1,0 +1,1 @@
+alter table otp add `type` enum('cellphone','email-address') not null DEFAULT 'cellphone';

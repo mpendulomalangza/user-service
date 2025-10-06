@@ -1,0 +1,1 @@
+alter table user add accept_term_conditions bit NOT NULL  default 0;

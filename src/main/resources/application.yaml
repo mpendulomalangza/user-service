@@ -1,0 +1,60 @@
+spring:
+  application:
+    name: user-service
+  main:
+    lazy-initialization: true
+  datasource:
+    username: user_svc_acc
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST}:3306/user?useSSL=false&sslMode=DISABLED&allowPublicKeyRetrieval=true
+  flyway:
+    url: ${spring.datasource.url}
+    password: ${spring.datasource.password}
+    user: ${spring.datasource.username}
+  jpa:
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
+  rabbitmq:
+    username: user-service
+    password: ${RABBIT_PASSWORD}
+    host: ${RABBIT_HOST}
+    port: 5672
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://auth-server:9000/oauth2/jwks
+          issuer-uri: http://auth-server:9000
+server:
+  servlet:
+    context-path: /user-service
+  port: 9001
+otp:
+  limit: 3
+  duration: 30
+error:
+  auth: Username or password not correct
+queue:
+  passenger: passenger-user
+  driver: driver-user
+  notification: notification
+  contact-request: contact-req
+  contact-resp: contact-resp
+password:
+  encoder: scrypt
+springdoc:
+  show-actuator: true
+s3:
+  bucket: uride
+  access-key: ${AWS_ACCESS_KEY}
+  secret: ${AWS_SECRET}
+  allowed-mime-types: image/jpeg,image/png,image/jpg
+  maximum-file-size: 2
+logging:
+  level:
+    root: ${LOGGING_LEVEL}
+system:
+  id: 1000009
+

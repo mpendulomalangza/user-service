@@ -1,0 +1,1 @@
+alter table user_password add constraint unique_password unique key (user_id,password) ;
