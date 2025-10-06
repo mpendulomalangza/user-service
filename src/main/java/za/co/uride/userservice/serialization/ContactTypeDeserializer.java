@@ -7,9 +7,6 @@ import com.google.gson.JsonParseException;
 import za.co.uride.userservice.enums.EContactType;
 
 import java.lang.reflect.Type;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 
 public class ContactTypeDeserializer implements JsonDeserializer<EContactType> {
     @Override
