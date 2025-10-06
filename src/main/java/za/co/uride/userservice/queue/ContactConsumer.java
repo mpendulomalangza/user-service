@@ -47,7 +47,7 @@ public class ContactConsumer {
         } else if (notificationContactReqDto.getContactType().equals(EContactType.EMAIL)) {
             contactRespDtoBuilder.contact(contactDto.getEmailAddress());
         }
-        queueMessageService.sendMessage(contactRespQueue, ERabbitVirtualHost.USER.getVirtualHost(), gsonMapper.toJson(contactRespDtoBuilder.build()));
+        queueMessageService.sendMessage(contactRespQueue, ERabbitVirtualHost.USER.getVirtualHost(), contactRespDtoBuilder.build());
     }
 
 }
