@@ -12,6 +12,8 @@ spring:
     url: ${spring.datasource.url}
     password: ${spring.datasource.password}
     user: ${spring.datasource.username}
+    baseline-on-migrate: true
+    fail-on-missing-locations: true
   jpa:
     hibernate:
       naming:
