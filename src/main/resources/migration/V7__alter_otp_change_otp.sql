@@ -1,1 +1,0 @@
-alter table otp change otp  otp varchar(4) not null;

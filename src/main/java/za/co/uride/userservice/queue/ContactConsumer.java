@@ -30,7 +30,7 @@ public class ContactConsumer {
     private final Gson gsonMapper;
 
     @Transactional
-    @RabbitListener(queues = "contact-req", containerFactory = "userVirtualHostListenerContainerFactory")
+    @RabbitListener(queues = "${queue.contact-request}", containerFactory = "userVirtualHostListenerContainerFactory")
     public void consumeContactMessage(String message) {
         JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(List.of(new UserAuthority("edit-entity-user"), new UserAuthority("edit-entity")), "entity-driver-consumer", -1);
         jwtAuthenticationToken.setAuthenticated(true);

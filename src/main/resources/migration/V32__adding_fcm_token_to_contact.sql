@@ -1,1 +1,0 @@
-alter table contact add fcm_token varchar(200) null;

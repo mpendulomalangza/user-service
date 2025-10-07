@@ -1,1 +1,0 @@
-alter table contact drop last_modified_on;

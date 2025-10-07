@@ -12,6 +12,8 @@ spring:
     url: ${spring.datasource.url}
     password: ${spring.datasource.password}
     user: ${spring.datasource.username}
+    baseline-on-migrate: true
+    fail-on-missing-locations: true
   jpa:
     hibernate:
       naming:
@@ -21,6 +23,9 @@ spring:
     password: ${RABBIT_PASSWORD}
     host: ${RABBIT_HOST}
     port: 5672
+    listener:
+      direct:
+        auto-startup: on
   security:
     oauth2:
       resourceserver:
