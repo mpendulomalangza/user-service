@@ -1,1 +1,0 @@
-alter table contact add last_modified_on datetime NOT NULL ;

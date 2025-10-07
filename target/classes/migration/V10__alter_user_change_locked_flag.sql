@@ -1,1 +1,0 @@
-alter table user add locked bit not null default 0;

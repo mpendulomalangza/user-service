@@ -18,3 +18,4 @@ public class UserServiceApplication {
         log.info("PostConstruct");
     }
 }
+

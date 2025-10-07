@@ -1,1 +1,0 @@
-alter table user add constraint unique_username unique key (user_name) ;
