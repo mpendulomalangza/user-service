@@ -57,16 +57,12 @@ public class UserAvatarServiceImpl implements UserAvatarService {
     @PreAuthorize("hasAuthority('find-user-avatar')")
     public PreSignedAvatarDto find() {
         JwtAuthenticationToken authentication = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        Optional<UserAvatar> userAvatarList = repository.findByUserId(authentication.getUserId(), LocalDateTime.now());
-        if (userAvatarList.isEmpty()) {
-            throw new FindException("No avatar found");
-        }
-        return PreSignedAvatarDto.builder().url(amazonStorageService.getFile(userAvatarList.get().getFileKey())).build();
+        return find(authentication.getUserId());
     }
 
     @Transactional
     @Override
-    @PreAuthorize("hasAuthority('find-contact-avatar')")
+    @PreAuthorize("hasAnyAuthority('find-driver-avatar','find-passenger-avatar','find-user-avatar')")
     public PreSignedAvatarDto find(long userId) {
         JwtAuthenticationToken authentication = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         Optional<UserAvatar> userAvatarList = repository.findByUserId(authentication.getUserId(), LocalDateTime.now());
