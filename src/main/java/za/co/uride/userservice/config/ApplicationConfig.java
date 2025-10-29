@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import za.co.uride.userservice.enums.EConsentType;
+
 import za.co.uride.userservice.serialization.ContactTypeDeserializer;
 import za.co.uride.userservice.serialization.LocalDateDeserializer;
 import za.co.uride.userservice.serialization.LocalDateSerializer;
@@ -46,4 +47,5 @@ public class ApplicationConfig {
     public AuditorAware<String> auditorAware() {
         return new AuditorAwareImpl();
     }
+
 }

@@ -27,4 +27,9 @@ public class ContactDto implements Serializable {
     private boolean cellphoneNumberVerified = false;
     private String fcmToken;
     private UserDto user;
+
+    @Override
+    public String toString() {
+        return String.format("contact{user-id:%d}", user.getId());
+    }
 }

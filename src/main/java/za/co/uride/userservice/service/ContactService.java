@@ -5,6 +5,7 @@ import za.co.uride.userservice.dto.UserDto;
 import za.co.uride.userservice.enums.EContactType;
 
 public interface ContactService {
+
     void saveContact(ContactDto contactDto);
 
     void deleteContact(long id);

@@ -3,6 +3,7 @@ package za.co.uride.userservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import za.co.uride.userservice.domain.entity.Contact;
 import za.co.uride.userservice.domain.entity.User;
@@ -25,6 +26,7 @@ public class ContactServiceImpl implements ContactService {
     /**
      * @param contactDto contact DTO
      */
+    @CacheEvict(cacheNames = "defaultCache", key = "#contactDto.toString()")
     @Override
     public void saveContact(ContactDto contactDto) {
         Contact contact = modelMapper.map(contactDto, Contact.class);
@@ -38,7 +40,6 @@ public class ContactServiceImpl implements ContactService {
         }
         repository.save(contact);
     }
-
 
     @Override
     public void deleteContact(long id) {
