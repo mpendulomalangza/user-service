@@ -1,6 +1,7 @@
 package za.co.uride.userservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import za.co.uride.userservice.dto.ContactDetailsDto;
@@ -21,6 +22,7 @@ public class ContactDetailServiceImpl implements ContactDetailService {
     private final ContactService contactService;
 
     @PreAuthorize("hasAuthority('find-contact')")
+    @Cacheable(cacheNames = "defaultCache")
     @Override
     public ContactDetailsDto find(FindContactDto findContactDto) {
         ContactDto contactDto = contactService.findById(findContactDto.getId());
