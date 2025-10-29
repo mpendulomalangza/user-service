@@ -44,7 +44,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                         "/user/register-passenger/*", "/user/verify/*",
                         "/otp/verify/", "/user-verification/complete/*", "/user-verification/start/*",
                         "/oauth2/token", "/swagger-ui/oauth2-redirect.html", "/contact/available/*",
-                        "/user-service/v3/api-docs").anonymous().anyRequest().authenticated())
+                        "/user-service/v3/api-docs","/actuator/*").anonymous().anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> {
                             jwtConfigurer.jwtAuthenticationConverter(source -> {
                                 long userId = Long.parseLong(source.getClaim("userId").toString());
