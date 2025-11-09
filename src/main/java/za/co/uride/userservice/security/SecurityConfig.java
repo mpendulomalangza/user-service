@@ -41,10 +41,10 @@ public class SecurityConfig implements WebMvcConfigurer {
 
         http.authorizeHttpRequests(auth -> auth.requestMatchers("/v3/api-docs", "/v3/api-docs/swagger-config", "/swagger-ui/*",
                         "/user/register/*", "/user/register-staff/*",
-                        "/user/register-passenger/*", "/user/verify/*",
+                        "/user/register-passenger/*", "/user/verify/*", "/user/complete-register/*",
                         "/otp/verify/", "/user-verification/complete/*", "/user-verification/start/*",
                         "/oauth2/token", "/swagger-ui/oauth2-redirect.html", "/contact/available/*",
-                        "/user-service/v3/api-docs","/actuator/*").anonymous().anyRequest().authenticated())
+                        "/user-service/v3/api-docs", "/actuator/*").anonymous().anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> {
                             jwtConfigurer.jwtAuthenticationConverter(source -> {
                                 long userId = Long.parseLong(source.getClaim("userId").toString());
@@ -59,8 +59,8 @@ public class SecurityConfig implements WebMvcConfigurer {
         http.sessionManagement(session -> session.maximumSessions(1));
         http.csrf(httpSecurityCsrfConfigurer ->
                 httpSecurityCsrfConfigurer.ignoringRequestMatchers("/v3/api-docs", "/v3/api-docs/swagger-config",
-                        "/swagger-ui/*", "/user/register/*", "/user/register-staff/*",
-                        "/user/register-passenger/*", "/user/verify/*", "/otp/verify/", "/user-verification/complete/*",
+                        "/swagger-ui/*", "/user/register/*", "/user/register-staff/*", "/user-verification/complete/*",
+                        "/user/register-passenger/*", "/user/verify/*", "/otp/verify/", "/user/complete-register/*",
                         "/user-verification/start/*", "/oauth2/token", "/swagger-ui/oauth2-redirect.html", "/contact/available/*", "/user-service/v3/api-docs"));
         return http.build();
     }

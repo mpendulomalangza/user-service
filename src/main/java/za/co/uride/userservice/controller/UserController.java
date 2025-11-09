@@ -8,12 +8,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import za.co.uride.userservice.dto.PostBody;
-import za.co.uride.userservice.dto.RegisterUserDto;
+import za.co.uride.userservice.dto.RegisterDto;
+import za.co.uride.userservice.dto.CompleteRegisterUserDto;
 import za.co.uride.userservice.dto.StaffUserRegistrationDto;
 import za.co.uride.userservice.dto.UserDto;
 import za.co.uride.userservice.service.RegisterService;
-
-import java.security.NoSuchAlgorithmException;
 
 @RequestMapping("user")
 @RestController
@@ -22,16 +21,21 @@ import java.security.NoSuchAlgorithmException;
 public class UserController {
     private final RegisterService registerService;
 
+    @PostMapping(name = "complete-register", path = "/complete-register/v1")
+    public PostBody<UserDto> completeRegister(@RequestBody @Valid PostBody<CompleteRegisterUserDto> postBody) {
+        CompleteRegisterUserDto completeRegisterUserDto = postBody.getData();
+        return new PostBody<>(registerService.complete(completeRegisterUserDto));
+    }
+
     @PostMapping(name = "register", path = "/register/v1")
-    public PostBody<UserDto> register(@RequestBody @Valid PostBody<RegisterUserDto> postBody) throws NoSuchAlgorithmException {
-        RegisterUserDto registerUserDto = postBody.getData();
-        return new PostBody<>(registerService.register(registerUserDto));
+    public PostBody<UserDto> register(@RequestBody @Valid PostBody<RegisterDto> postBody) {
+        return new PostBody<>(registerService.register(postBody.getData()));
     }
 
     @PostMapping(name = "register-staff", path = "/register-staff/v1")
-    public PostBody<UserDto> registerStaff(@RequestBody @Valid PostBody<StaffUserRegistrationDto> postBody) throws NoSuchAlgorithmException {
-        RegisterUserDto registerUserDto = postBody.getData();
-        return new PostBody<>(registerService.register(registerUserDto));
+    public PostBody<UserDto> registerStaff(@RequestBody @Valid PostBody<StaffUserRegistrationDto> postBody) {
+        CompleteRegisterUserDto completeRegisterUserDto = postBody.getData();
+        return new PostBody<>(registerService.complete(completeRegisterUserDto));
     }
 
 }
