@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Setter
 @Getter
-public class StaffUserRegistrationDto extends CompleteRegisterUserDto implements Serializable {
+public class CompleteStaffUserRegistrationDto extends CompleteRegisterUserDto implements Serializable {
     @NotNull
     @Size(min = 10, max = 30)
     private String identityNumber;

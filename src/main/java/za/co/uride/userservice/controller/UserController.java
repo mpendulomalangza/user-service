@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import za.co.uride.userservice.dto.PostBody;
 import za.co.uride.userservice.dto.RegisterDto;
 import za.co.uride.userservice.dto.CompleteRegisterUserDto;
-import za.co.uride.userservice.dto.StaffUserRegistrationDto;
+import za.co.uride.userservice.dto.CompleteStaffUserRegistrationDto;
 import za.co.uride.userservice.dto.UserDto;
 import za.co.uride.userservice.service.RegisterService;
 
@@ -21,7 +21,7 @@ import za.co.uride.userservice.service.RegisterService;
 public class UserController {
     private final RegisterService registerService;
 
-    @PostMapping(name = "complete-register", path = "/complete-register/v1")
+    @PostMapping(name = "complete-registration", path = "/complete-register/v1")
     public PostBody<UserDto> completeRegister(@RequestBody @Valid PostBody<CompleteRegisterUserDto> postBody) {
         CompleteRegisterUserDto completeRegisterUserDto = postBody.getData();
         return new PostBody<>(registerService.complete(completeRegisterUserDto));
@@ -32,8 +32,8 @@ public class UserController {
         return new PostBody<>(registerService.register(postBody.getData()));
     }
 
-    @PostMapping(name = "register-staff", path = "/register-staff/v1")
-    public PostBody<UserDto> registerStaff(@RequestBody @Valid PostBody<StaffUserRegistrationDto> postBody) {
+    @PostMapping(name = "complete-staff-registration", path = "/register-staff/v1")
+    public PostBody<UserDto> registerStaff(@RequestBody @Valid PostBody<CompleteStaffUserRegistrationDto> postBody) {
         CompleteRegisterUserDto completeRegisterUserDto = postBody.getData();
         return new PostBody<>(registerService.complete(completeRegisterUserDto));
     }
