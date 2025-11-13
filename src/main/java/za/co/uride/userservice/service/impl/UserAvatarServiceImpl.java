@@ -66,8 +66,7 @@ public class UserAvatarServiceImpl implements UserAvatarService {
     @Override
     @PreAuthorize("hasAnyAuthority('find-driver-avatar','find-passenger-avatar','find-user-avatar')")
     public PreSignedAvatarDto find(long userId) {
-        JwtAuthenticationToken authentication = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        Optional<UserAvatar> userAvatarList = repository.findByUserId(authentication.getUserId(), LocalDateTime.now());
+        Optional<UserAvatar> userAvatarList = repository.findByUserId(userId, LocalDateTime.now());
         if (userAvatarList.isEmpty()) {
             throw new FindException("No avatar found");
         }
