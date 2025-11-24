@@ -21,11 +21,11 @@ public abstract class VirtualHostBase {
     protected abstract String getVHost();
 
     public ConnectionFactory connectionFactory() {
-        var connFactory = new CachingConnectionFactory(host, port);
-        connFactory.setVirtualHost(getVHost());
-        connFactory.setUsername(username);
-        connFactory.setPassword(password);
-        return connFactory;
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory(host, port);
+        connectionFactory.setVirtualHost(getVHost());
+        connectionFactory.setUsername(username);
+        connectionFactory.setPassword(password);
+        return connectionFactory;
     }
 }
 

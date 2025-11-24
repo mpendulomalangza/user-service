@@ -31,7 +31,13 @@ spring:
     port: 5672
     listener:
       direct:
-        auto-startup: on
+        auto-startup: true
+        force-stop: true
+        missing-queues-fatal: true
+      simple:
+        auto-startup: true
+        force-stop: true
+        missing-queues-fatal: true
   security:
     oauth2:
       resourceserver:
@@ -66,6 +72,9 @@ s3:
 logging:
   level:
     root: ${LOGGING_LEVEL}
+    org:
+      springframework:
+        amqp: DEBUG
 system:
   id: 1000009
 
