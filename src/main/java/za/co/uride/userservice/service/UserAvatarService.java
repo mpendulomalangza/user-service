@@ -2,11 +2,16 @@ package za.co.uride.userservice.service;
 
 import org.springframework.web.multipart.MultipartFile;
 import za.co.uride.userservice.dto.PreSignedAvatarDto;
+import za.co.uride.userservice.dto.PreSignedAvatarListItemDto;
+
+import java.util.List;
 
 public interface UserAvatarService {
     void save(MultipartFile multipartFile);
 
-    PreSignedAvatarDto find();
+    PreSignedAvatarDto findAll();
 
-    PreSignedAvatarDto find(long userId);
+    PreSignedAvatarDto findAll(long userId);
+
+    List<PreSignedAvatarListItemDto> findAll(List<Long> users);
 }
