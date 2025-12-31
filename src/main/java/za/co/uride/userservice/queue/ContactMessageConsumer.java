@@ -27,10 +27,10 @@ import java.util.List;
 @Configuration
 public class ContactMessageConsumer {
     @Value("${queue.contact-request}")
-    private String requestQueue;
+    private String contactRequestQueue;
     private final ConnectionFactory notificationConnectionFactory;
     @Value("${queue.contact-resp}")
-    private String responseQueue;
+    private String contactResponseQueue;
     private final ContactService contactService;
     private final QueueMessageService queueMessageService;
     private final Gson gsonMapper;
@@ -41,7 +41,7 @@ public class ContactMessageConsumer {
         messageListenerContainer.setConnectionFactory(notificationConnectionFactory);
         messageListenerContainer.setAutoStartup(true);
         messageListenerContainer.setMessageListener(contactMessageListener());
-        messageListenerContainer.setQueueNames(requestQueue);
+        messageListenerContainer.setQueueNames(contactRequestQueue);
         return messageListenerContainer;
     }
 
@@ -64,7 +64,7 @@ public class ContactMessageConsumer {
             } else if (notificationContactReqDto.getContactType().equals(EContactType.EMAIL)) {
                 contactRespDtoBuilder.contact(contactDto.getEmailAddress());
             }
-            queueMessageService.sendMessage(responseQueue, ERabbitVirtualHost.USER.getVirtualHost(), contactRespDtoBuilder.build());
+            queueMessageService.sendMessage(contactResponseQueue, ERabbitVirtualHost.USER.getVirtualHost(), contactRespDtoBuilder.build());
             System.out.println("received: " + message);
         };
     }

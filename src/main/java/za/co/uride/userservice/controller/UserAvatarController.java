@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import za.co.uride.userservice.dto.FindDto;
 import za.co.uride.userservice.dto.PreSignedAvatarDto;
+import za.co.uride.userservice.dto.PreSignedAvatarListItemDto;
 import za.co.uride.userservice.service.UserAvatarService;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -21,12 +24,17 @@ public class UserAvatarController {
 
     @PostMapping(value = "/find/v1", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public PreSignedAvatarDto find() {
-        return userAvatarService.find();
+        return userAvatarService.findAll();
     }
 
     @PostMapping(value = "/find-by-id/v1", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public PreSignedAvatarDto findBy(@RequestBody @Valid FindDto findDto) {
-        return userAvatarService.find(findDto.getId());
+        return userAvatarService.findAll(findDto.getId());
+    }
+
+    @PostMapping(value = "/find-by-list/v1", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<PreSignedAvatarListItemDto> findAllByList(@RequestBody @Valid List<Long> userIds) {
+        return userAvatarService.findAll(userIds);
     }
 
     @PostMapping(value = "/upload/v1", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

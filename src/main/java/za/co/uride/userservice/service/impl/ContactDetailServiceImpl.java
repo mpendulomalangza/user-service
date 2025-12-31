@@ -36,7 +36,7 @@ public class ContactDetailServiceImpl implements ContactDetailService {
             contactDetailsDtoBuilder.contact(contactDto.getEmailAddress());
         }
         try {
-            contactDetailsDtoBuilder.avatar(userAvatarService.find(findContactDto.getId()).getUrl());
+            contactDetailsDtoBuilder.avatar(userAvatarService.findAll(findContactDto.getId()).getUrl());
         } catch (FindException ignored) {
 
         }

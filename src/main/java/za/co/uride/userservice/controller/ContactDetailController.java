@@ -16,7 +16,7 @@ import za.co.uride.userservice.service.ContactDetailService;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class                                                                                                                                                                                                                                                                                                                   ContactDetailController {
+public class ContactDetailController {
     private final ContactDetailService contactDetailService;
 
     @PostMapping(name = "find", path = "/find/v1")

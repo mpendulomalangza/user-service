@@ -44,17 +44,15 @@ public class SecurityConfig implements WebMvcConfigurer {
                         "/user/register-passenger/*", "/user/verify/*", "/user/complete-register/*",
                         "/otp/verify/", "/user-verification/complete/*", "/user-verification/start/*",
                         "/oauth2/token", "/swagger-ui/oauth2-redirect.html", "/contact/available/*",
-                        "/user-service/v3/api-docs", "/actuator/*").anonymous().anyRequest().authenticated())
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> {
-                            jwtConfigurer.jwtAuthenticationConverter(source -> {
-                                long userId = Long.parseLong(source.getClaim("userId").toString());
-                                URideUserDetails.URideUserDetailsBuilder customUserDetailsBuilder = URideUserDetails.builder().authorities(jwtConvertor.convert(source)).username(source.getSubject());
-                                JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(jwtConvertor.convert(source), source.getSubject(), userId);
-                                jwtAuthenticationToken.setDetails(customUserDetailsBuilder.build());
-                                jwtAuthenticationToken.setAuthenticated(true);
-                                return jwtAuthenticationToken;
-                            });
-                        })
+                        "/user-service/v3/api-docs", "/actuator/*", "/actuator").anonymous().anyRequest().authenticated())
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(source -> {
+                    long userId = Long.parseLong(source.getClaim("userId").toString());
+                    URideUserDetails.URideUserDetailsBuilder customUserDetailsBuilder = URideUserDetails.builder().authorities(jwtConvertor.convert(source)).username(source.getSubject());
+                    JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(jwtConvertor.convert(source), source.getSubject(), userId);
+                    jwtAuthenticationToken.setDetails(customUserDetailsBuilder.build());
+                    jwtAuthenticationToken.setAuthenticated(true);
+                    return jwtAuthenticationToken;
+                }))
                 );
         http.sessionManagement(session -> session.maximumSessions(1));
         http.csrf(httpSecurityCsrfConfigurer ->

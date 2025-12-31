@@ -12,6 +12,7 @@ import za.co.uride.userservice.domain.entity.UserAvatar;
 import za.co.uride.userservice.domain.repository.UserAvatarRepository;
 import za.co.uride.userservice.dto.PreSignedAvatarDto;
 
+import za.co.uride.userservice.dto.PreSignedAvatarListItemDto;
 import za.co.uride.userservice.dto.UserDto;
 import za.co.uride.userservice.enums.EUserType;
 import za.co.uride.userservice.exception.FindException;
@@ -22,6 +23,8 @@ import za.co.uride.userservice.service.UserAvatarService;
 import za.co.uride.userservice.service.UserService;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -57,19 +60,32 @@ public class UserAvatarServiceImpl implements UserAvatarService {
     @Transactional
     @Override
     @PreAuthorize("hasAuthority('find-user-avatar')")
-    public PreSignedAvatarDto find() {
+    public PreSignedAvatarDto findAll() {
         JwtAuthenticationToken authentication = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        return find(authentication.getUserId());
+        return findAll(authentication.getUserId());
     }
 
     @Transactional
     @Override
     @PreAuthorize("hasAnyAuthority('find-driver-avatar','find-passenger-avatar','find-user-avatar')")
-    public PreSignedAvatarDto find(long userId) {
-        Optional<UserAvatar> userAvatarList = repository.findByUserId(userId, LocalDateTime.now());
-        if (userAvatarList.isEmpty()) {
+    public PreSignedAvatarDto findAll(long userId) {
+        Optional<UserAvatar> optionalUserAvatar = repository.findByUserId(userId, LocalDateTime.now());
+        if (optionalUserAvatar.isEmpty()) {
             throw new FindException("No avatar found");
         }
-        return PreSignedAvatarDto.builder().url(amazonStorageService.getFile(userAvatarList.get().getFileKey())).build();
+        return PreSignedAvatarDto.builder().url(amazonStorageService.getFile(optionalUserAvatar.get().getFileKey())).build();
+    }
+
+    @Transactional
+    @Override
+    @PreAuthorize("hasAuthority('find-contact-avatar')")
+    public List<PreSignedAvatarListItemDto> findAll(List<Long> users) {
+        List<PreSignedAvatarListItemDto> avatars = new ArrayList<>();
+        List<UserAvatar> userAvatarList = repository.findAll(users, LocalDateTime.now());
+        for (UserAvatar userAvatar : userAvatarList) {
+            avatars.add(PreSignedAvatarListItemDto.builder().url(amazonStorageService.getFile(userAvatar.getFileKey()))
+                    .userId(userAvatar.getUser().getId()).name(userAvatar.getUser().getName()).build());
+        }
+        return avatars;
     }
 }

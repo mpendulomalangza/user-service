@@ -20,6 +20,7 @@ import za.co.uride.userservice.dto.UserDeviceDto;
 import za.co.uride.userservice.dto.UserDto;
 import za.co.uride.userservice.dto.UserPasswordDto;
 import za.co.uride.userservice.dto.UserRoleDto;
+import za.co.uride.userservice.enums.ECategory;
 import za.co.uride.userservice.enums.EConsentType;
 import za.co.uride.userservice.enums.EContactType;
 import za.co.uride.userservice.enums.ENotificationType;
@@ -108,11 +109,11 @@ public class RegisterServiceImpl implements RegisterService {
         try {
             UserDto userDto = modelMapper.map(registerDto, UserDto.class);
             userDto.setUserType(EUserType.PROFILE);
-            userDto.setName("");
             userDto.setStatus(true);
             userDto.setAcceptTermsAndConditions(false);
             userDto.setUsername(registerDto.getContact());
-
+            //Name is set on complete registration
+            userDto.setName("");
             RoleDto roleDto = roleService.findRole(registerDto.getRole(), registerDto.getSystem());
             try {
                 userService.findByUsername(userDto.getUsername(), EUserType.PROFILE);
@@ -145,7 +146,9 @@ public class RegisterServiceImpl implements RegisterService {
                 userDeviceService.saveUserDevice(UserDeviceDto.builder().user(userDto).deviceKey(registerDto.getDeviceKey()).deviceName(registerDto.getDeviceName()).build());
                 userRoleService.save(UserRoleDto.builder().user(userDto).role(roleDto).build());
                 queueMessageService.sendMessage(notificationQueue, ERabbitVirtualHost.NOTIFICATION.getVirtualHost(),
-                        NotificationDto.builder().message(String.format("Your OTP is %s, it is valid for 30 minutes", otpDto.getOtp())).notificationType(ENotificationType.SMS).recipients(Collections.singletonList(userDto.getId())).senderId(systemId).build());
+                        NotificationDto.builder().message(String.format("Your OTP is %s, it is valid for 30 minutes", otpDto.getOtp()))
+                                .notificationType(ENotificationType.SMS).recipients(Collections.singletonList(userDto.getId()))
+                                .senderId(systemId).category(ECategory.DIRECT).build());
 
             } catch (FindException ignored) {
             }
