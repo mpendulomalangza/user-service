@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import za.co.uride.userservice.enums.ECategory;
 import za.co.uride.userservice.enums.ENotificationType;
 
 import java.io.Serializable;
@@ -31,4 +32,6 @@ public class NotificationDto implements Serializable {
     private Map<String, String> metadata = new HashMap<>();
     @NotNull
     private String sourceSystem;
+    @NotNull
+    private ECategory category;
 }
