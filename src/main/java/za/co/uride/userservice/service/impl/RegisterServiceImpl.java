@@ -108,7 +108,6 @@ public class RegisterServiceImpl implements RegisterService {
         try {
             UserDto userDto = modelMapper.map(registerDto, UserDto.class);
             userDto.setUserType(EUserType.PROFILE);
-            userDto.setName("");
             userDto.setStatus(true);
             userDto.setAcceptTermsAndConditions(false);
             userDto.setUsername(registerDto.getContact());

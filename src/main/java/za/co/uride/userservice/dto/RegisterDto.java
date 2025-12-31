@@ -23,6 +23,7 @@ public class RegisterDto implements Serializable {
     private String contact;
     private String fcmToken;
     private String role;
+    private String name;
     @NotNull
     private ESystem system;
 }
