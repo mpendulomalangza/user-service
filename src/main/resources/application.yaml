@@ -54,8 +54,8 @@ otp:
 error:
   auth: Username or password not correct
 queue:
-  passenger: passenger-user
-  driver: driver-user
+  passenger: passenger-user-req
+  driver: driver-user-req
   notification: notification
   contact-request: contact-req
   contact-resp: contact-resp

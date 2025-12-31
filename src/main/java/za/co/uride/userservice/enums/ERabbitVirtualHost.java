@@ -7,6 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ERabbitVirtualHost {
     USER("user"),
-    NOTIFICATION("notification");
+    NOTIFICATION("notification"),
+    DRIVER("driver");
     private final String virtualHost;
 }
