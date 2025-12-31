@@ -56,7 +56,7 @@ error:
 queue:
   passenger: passenger-user-req
   driver: driver-user-req
-  notification: notification
+  notification: message-req
   contact-request: contact-req
   contact-resp: contact-resp
 password:

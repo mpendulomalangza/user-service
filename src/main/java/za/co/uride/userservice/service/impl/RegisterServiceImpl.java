@@ -111,7 +111,8 @@ public class RegisterServiceImpl implements RegisterService {
             userDto.setStatus(true);
             userDto.setAcceptTermsAndConditions(false);
             userDto.setUsername(registerDto.getContact());
-
+            //Name is set on complete registration
+            userDto.setName("");
             RoleDto roleDto = roleService.findRole(registerDto.getRole(), registerDto.getSystem());
             try {
                 userService.findByUsername(userDto.getUsername(), EUserType.PROFILE);
