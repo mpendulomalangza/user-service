@@ -15,5 +15,7 @@ public interface UserService {
 
     UserDto save(UserDto userDto);
 
+    UserDto findVerifiedUserById(long id);
+
 
 }

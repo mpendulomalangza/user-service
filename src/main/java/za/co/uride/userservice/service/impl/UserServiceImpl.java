@@ -69,5 +69,11 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(user, UserDto.class);
     }
 
+    @Override
+    public UserDto findVerifiedUserById(long id) {
+        User user = repository.findByIdAndVerified(id, true).orElseThrow(() -> new FindException(String.format("User with id %d does not exist", id)));
+        return modelMapper.map(user, UserDto.class);
+    }
+
 
 }
