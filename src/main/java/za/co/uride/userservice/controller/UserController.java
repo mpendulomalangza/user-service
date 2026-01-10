@@ -21,7 +21,7 @@ import za.co.uride.userservice.service.RegisterService;
 public class UserController {
     private final RegisterService registerService;
 
-    @PostMapping(name = "complete-registration", path = "/complete-register/v1")
+    @PostMapping(name = "complete-client-registration", path = "/complete-client-registration/v1")
     public PostBody<UserDto> completeRegister(@RequestBody @Valid PostBody<CompleteRegisterUserDto> postBody) {
         CompleteRegisterUserDto completeRegisterUserDto = postBody.getData();
         return new PostBody<>(registerService.complete(completeRegisterUserDto));

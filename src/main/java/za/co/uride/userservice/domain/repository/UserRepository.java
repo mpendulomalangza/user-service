@@ -15,4 +15,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select u from User u join UserRole ur on ur.user=u where u.userType =:userType and ur.role.roleName=:role  and u.verified=:status ")
     List<User> findAll(@Param(value = "userType") EUserType userType,@Param("status") boolean status,@Param(value = "role") String role);
 
+    Optional<User> findByIdAndVerified(long id,  boolean verified);
+
 }
